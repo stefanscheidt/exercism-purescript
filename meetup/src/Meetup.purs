@@ -18,10 +18,11 @@ data Week = First
           | Teenth
 
 meetup:: Year -> Month -> Week -> Weekday -> Maybe Date
-meetup y m Teenth wd = mDay
+meetup y m Teenth wd = teenthDay
   where
+    toDate it = canonicalDate y m <$> toEnum it
     teenth = range 13 19
-    mDates = map (\it -> canonicalDate y m <$> toEnum it) teenth
-    isWeekday wDay = (map weekday) >>> (eq (Just wDay))
-    mDay = join $ head $ filter (isWeekday wd) mDates
+    teenthDates = map toDate teenth
+    isWeekday wDay = map weekday >>> eq (Just wDay)
+    teenthDay = join $ head $ filter (isWeekday wd) teenthDates
 meetup y m _ wd = Nothing
