@@ -102,7 +102,7 @@ suites = do
       Assert.equal (Just $ canonicalDate <$> toEnum 2013 <*> toEnum 10 <*> toEnum 13)
                    (meetup <$> toEnum 2013 <*> toEnum 10 <@> Teenth <@> Sunday)
 
-{--
+
     test "first Monday of March 2013" $
       Assert.equal (Just $ canonicalDate <$> toEnum 2013 <*> toEnum 3 <*> toEnum 4)
                    (meetup <$> toEnum 2013 <*> toEnum 3 <@> First <@> Monday)
@@ -326,7 +326,7 @@ suites = do
     test "fourth Sunday of April 2013" $
       Assert.equal (Just $ canonicalDate <$> toEnum 2013 <*> toEnum 4 <*> toEnum 28)
                    (meetup <$> toEnum 2013 <*> toEnum 4 <@> Fourth <@> Sunday)
-
+{--
     test "last Monday of March 2013" $
       Assert.equal (Just $ canonicalDate <$> toEnum 2013 <*> toEnum 3 <*> toEnum 25)
                    (meetup <$> toEnum 2013 <*> toEnum 3 <@> Last <@> Monday)

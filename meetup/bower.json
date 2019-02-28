@@ -12,7 +12,7 @@
     "purescript-either": "^4.0.0",
     "purescript-enums": "^4.0.0",
     "purescript-integers": "^4.0.0",
-    "purescript-lists": "^5.0.0",
+    "purescript-lists": "^5.4.0",
     "purescript-prelude": "^4.1.0",
     "purescript-strings": "^4.0.0",
     "purescript-unicode": "^4.0.1",
