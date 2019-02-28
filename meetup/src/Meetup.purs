@@ -5,7 +5,7 @@ module Meetup
 
 import Prelude
 
-import Data.Array (filter, head, range)
+import Data.Array (find, range)
 import Data.Date (Date, Month, Weekday, Year, canonicalDate, lastDayOfMonth, weekday)
 import Data.Enum (fromEnum, toEnum)
 import Data.Maybe (Maybe(..))
@@ -34,4 +34,4 @@ meetup y m mode wd = resultDate
     candidateDates = map toDate candidateDays
 
     isWeekday wDay = map weekday >>> eq (Just wDay)
-    resultDate = join $ head $ filter (isWeekday wd) candidateDates
+    resultDate = join $ find (isWeekday wd) candidateDates
