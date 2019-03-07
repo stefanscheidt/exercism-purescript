@@ -18,9 +18,9 @@ data Week = First
           | Teenth
 
 meetup:: Year -> Month -> Week -> Weekday -> Maybe Date
-meetup y m mode wd = resultDate
+meetup y m w wd = resultDate
   where
-    candidateDays = case mode of
+    candidateDays = case w of
       First  -> range 1 7
       Second -> range 8 14
       Third  -> range 15 21
@@ -33,5 +33,5 @@ meetup y m mode wd = resultDate
     toDate d = canonicalDate y m <$> toEnum d
     candidateDates = map toDate candidateDays
 
-    isWeekday wDay = map weekday >>> eq (Just wDay)
+    isWeekday wDay = eq (Just wDay) <<< map weekday
     resultDate = join $ find (isWeekday wd) candidateDates
