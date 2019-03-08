@@ -5,14 +5,12 @@ module AtbashCipher
 
 import Prelude
 
-import Data.Array (drop, filter, reverse, snoc, take, zip)
+import Data.Array (drop, filter, intercalate, length, reverse, take, zip)
 import Data.Char.Unicode (isAlphaNum, toLower)
 import Data.Enum (enumFromTo)
 import Data.Map (Map, fromFoldable, lookup)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.String.CodeUnits (fromCharArray, toCharArray)
-import Data.String (joinWith)
-import Data.Tuple (Tuple(..), fst)
 
 -- encode
 
@@ -20,7 +18,7 @@ encodeChar :: Char -> Char
 encodeChar c = fromMaybe c $ lookup c cipher
 
 encode :: String -> Maybe String
-encode = Just <<< joinWith " " <<< map fromCharArray <<< package 5 <<< map encodeChar <<< normalize
+encode = Just <<< fromCharArray <<< intercalate [' '] <<< groupEvery 5 <<< map encodeChar <<< normalize
 
 -- decode
 
@@ -40,8 +38,7 @@ cipher = fromFoldable $ zip aToZ (reverse aToZ)
 normalize :: String -> Array Char
 normalize = map toLower <<< filter isAlphaNum <<< toCharArray
 
-package :: forall a. Int -> Array a -> Array (Array a)
-package n as = fst $ package' (Tuple [] as)
-  where
-    package' (Tuple bbs []) = Tuple bbs []
-    package' (Tuple bbs bs) = package' (Tuple (snoc bbs (take n bs)) (drop n bs))
+groupEvery :: forall a. Int -> Array a -> Array (Array a)
+groupEvery n as
+  | n >= length as = [as]
+  | otherwise = [take n as] <> groupEvery n (drop n as)
