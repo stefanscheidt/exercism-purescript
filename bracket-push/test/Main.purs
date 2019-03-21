@@ -19,6 +19,8 @@ suites = do
       Assert.equal true
                    (isPaired "[]")
 
+{--
+
     test "empty string" $
       Assert.equal true
                    (isPaired "")
@@ -66,3 +68,5 @@ suites = do
     test "complex latex expression" $
       Assert.equal true
                    (isPaired "\\left(\\begin{array}{cc} \\frac{1}{3} & x\\\\ \\mathrm{e}^{x} &... x^2 \\end{array}\\right)")
+                   
+--}
