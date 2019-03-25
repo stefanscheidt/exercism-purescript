@@ -1,6 +1,5 @@
 module BracketPush
   ( isPaired
-  , normalize
   ) where
 
 import Prelude
@@ -12,19 +11,27 @@ import Data.String.CodeUnits (toCharArray)
 
 
 isPaired :: String -> Boolean
-isPaired _ = false
+isPaired = eq (Just Nil) <<< parse <<< normalize
 
 normalize :: String -> List Char
 normalize = filter isBracket <<< fromFoldable <<< toCharArray
 
-s :: List Char -> Maybe (List Char)
-s (Cons '[' xs) = do
-  subtree <- s xs
-  headElem <- head subtree
-  if headElem == ']'
-    then tail subtree
-    else Nothing
-s _ = Nothing
+parse :: List Char -> Maybe (List Char)
+parse Nil = Just Nil
+parse (Cons '(' xs) = parseBrackets ')' xs
+parse (Cons '[' xs) = parseBrackets ']' xs
+parse (Cons '{' xs) = parseBrackets '}' xs
+parse inp@(Cons x xs)
+  | elem x [']','}', ')'] = Just inp
+  | otherwise             = Nothing
+
+parseBrackets :: Char -> List Char -> Maybe (List Char)
+parseBrackets close xs = do
+    subtree <- parse xs
+    headElem <- head subtree
+    if headElem == close
+      then tail subtree >>= parse
+      else Nothing
 
 isBracket :: Char -> Boolean
 isBracket = flip elem brackets
