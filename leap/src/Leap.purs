@@ -3,7 +3,6 @@ module Leap where
 import Prelude
 
 import Data.Int (rem)
-import Type.Data.Boolean (kind Boolean)
 
 isLeapYear :: Int -> Boolean
 isLeapYear year
